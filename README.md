@@ -17,12 +17,14 @@ Syntax: capdesktop.sh [options]
   -s          stack windows
   -p          capture mouse pointer
   -i [num]    desktops ids, start at 0 (default:-1 == all)
+  -r [value]  resize the image, format WxH
   -l          print script log
 
 Example:
   capdesktop.sh              (capture all desktops)
   capdesktop.sh -i "0 2 4"   (capture desktop 0,2 and 4)
   capdesktop.sh -i 2         (capture only desktop 2)
+  capdesktop.sh -r 800x600   (resize to 800x600)
 ```
 
 ### Dependencies:
