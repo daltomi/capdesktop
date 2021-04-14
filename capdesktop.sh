@@ -33,12 +33,14 @@ function usage() {
     echo "  -s          stack windows"
     echo "  -p          capture mouse pointer"
     echo "  -i [num]    desktops ids, start at 0 (default:-1 == all)"
+    echo "  -r [value]  resize the image, format WxH"
     echo "  -l          print script log"
     echo
     echo "  Example:"
     echo "   $SCRIPT_NAME              (capture all desktops)"
     echo "   $SCRIPT_NAME -i \"0 2 4\"   (capture desktop 0,2 and 4)"
     echo "   $SCRIPT_NAME -i 2         (capture only desktop 2)"
+    echo "   $SCRIPT_NAME -r 800x600   (resize to 800x600)"
     exit
 }
 
@@ -50,6 +52,10 @@ function exit_to_current_desktop() {
 function set_options() {
     if [[ "$JOIN_MODE" == "h" ]]; then
         CONVERT_OPTIONS="+append"
+    fi
+
+    if ! [[ -z "$RESIZE" ]]; then
+        RESIZE=" -resize $RESIZE "
     fi
 
     if [[ "$SCROT_STACK" -eq 1 ]]; then
@@ -74,7 +80,7 @@ function capture() {
 }
 
 function join() {
-    convert "$CONVERT_OPTIONS" -background "Black" $TMPFILE*.png  "$JOIN_IMAGE"
+    convert "$CONVERT_OPTIONS" -background "Black" $TMPFILE*.png  $RESIZE "$JOIN_IMAGE"
     tool_check_error $? "convert"
 }
 
@@ -86,6 +92,7 @@ function log() {
     echo "   NDESKTOPS      : $NDESKTOPS"
     echo "   CURRENT_DESKTOP: $CURRENT_DESKTOP"
     echo "   JOIN_MODE      : $JOIN_MODE"
+    echo "   RESIZE         : $RESIZE"
     echo "   PRINT_LOG      : $PRINT_LOG"
     echo "   ID_DESKTOPS    : $ID_DESKTOPS"
     echo "   SCROT_DELAY    : $SCROT_DELAY"
@@ -171,6 +178,8 @@ JOIN_IMAGE=`mktemp --dry-run capdesktop-XXXX.png`
 
 JOIN_MODE="v"
 
+RESIZE=""
+
 PRINT_LOG=0
 
 ID_DESKTOPS="-1"
@@ -187,7 +196,7 @@ SCROT_OPTIONS=""
 
 CONVERT_OPTIONS="-append"
 
-while getopts "j:d:spi:l" option
+while getopts "j:d:spi:r:l" option
 do
     case $option in
         h   ) usage;;
@@ -196,6 +205,7 @@ do
         s   ) SCROT_STACK=1;;
         p   ) SCROT_MOUSE=1;;
         i   ) ID_DESKTOPS="$OPTARG";;
+        r   ) RESIZE="$OPTARG";;
         l   ) PRINT_LOG=1;;
         ?   ) usage;;
     esac
