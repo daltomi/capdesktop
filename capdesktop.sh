@@ -21,35 +21,6 @@
 #
 #
 #------------------------------------------------
-SCRIPT_NAME="$(basename "$0")"
-
-NDESKTOPS=`xdotool get_num_desktops`
-
-CURRENT_DESKTOP=`xdotool get_desktop`
-
-TMPFILE="$(mktemp --dry-run)_capdesktop"
-
-JOIN_IMAGE=`mktemp --dry-run capdesktop-XXXX.png`
-
-JOIN_MODE="v"
-
-PRINT_LOG=0
-
-ID_DESKTOPS="-1"
-
-SCROT_DELAY=1
-
-SCROT_QUALITY=100
-
-SCROT_STACK=0
-
-SCROT_MOUSE=0
-
-SCROT_OPTIONS=""
-
-CONVERT_OPTIONS="-append"
-
-#------------------------------------------------
 
 function usage() {
     echo "Syntax: $SCRIPT_NAME [options]"
@@ -171,6 +142,38 @@ function param_validate() {
 #------------------------------------------------
 #                    MAIN
 #------------------------------------------------
+tool_check_if_exist "scrot"
+tool_check_if_exist "xdotool"
+tool_check_if_exist "convert"
+#------------------------------------------------
+SCRIPT_NAME="$(basename "$0")"
+
+NDESKTOPS=`xdotool get_num_desktops`
+
+CURRENT_DESKTOP=`xdotool get_desktop`
+
+TMPFILE="$(mktemp --dry-run)_capdesktop"
+
+JOIN_IMAGE=`mktemp --dry-run capdesktop-XXXX.png`
+
+JOIN_MODE="v"
+
+PRINT_LOG=0
+
+ID_DESKTOPS="-1"
+
+SCROT_DELAY=1
+
+SCROT_QUALITY=100
+
+SCROT_STACK=0
+
+SCROT_MOUSE=0
+
+SCROT_OPTIONS=""
+
+CONVERT_OPTIONS="-append"
+
 while getopts "j:d:spi:l" option
 do
     case $option in
@@ -185,9 +188,6 @@ do
     esac
 done
 
-tool_check_if_exist "scrot"
-tool_check_if_exist "xdotool"
-tool_check_if_exist "convert"
 param_validate
 set_options
 
