@@ -1,5 +1,7 @@
 ## capdesktop.sh - Screenshot of virtual desktops
 
+Take a screenshot of the selected desktops and merge them into a single image.
+
 <img src="https://github.com/daltomi/capdesktop/raw/master/screenshots/capdesktop.png"/>
 
 
