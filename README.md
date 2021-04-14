@@ -1,20 +1,7 @@
 ## capdesktop.sh - Screenshot of virtual desktops
 
-### Dependencies:
+<img src="https://github.com/daltomi/capdesktop/raw/master/screenshots/capdesktop.png"/>
 
-```bash
- External tools:
-     - scrot
-     - xdotool
-     - convert (ImageMagick)
- Base tools:
-     - mktemp
-     - whereis
-     - grep
-     - basename
-     - echo
-     - rm
-```
 
 ### Help
 
@@ -30,11 +17,13 @@ Syntax: capdesktop.sh [options]
   -i [num]    desktops ids, start at 0 (default:-1 == all)
   -l          print script log
 
-  Example:
-   capdesktop.sh              (capture all desktops)
-   capdesktop.sh -i "0 2 4"   (capture desktop 0,2 and 4)
-   capdesktop.sh -i 2         (capture only desktop 2)
+Example:
+  capdesktop.sh              (capture all desktops)
+  capdesktop.sh -i "0 2 4"   (capture desktop 0,2 and 4)
+  capdesktop.sh -i 2         (capture only desktop 2)
 ```
 
-<img src="https://github.com/daltomi/capdesktop/raw/master/screenshots/capdesktop.png"/>
+### Dependencies:
+
+Please, read the header of the script.
 
