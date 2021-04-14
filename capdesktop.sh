@@ -61,12 +61,19 @@ function set_options() {
 }
 
 function capture() {
+    local SUCCESS=0
     scrot -d "$SCROT_DELAY" -q "$SCROT_QUALITY" $SCROT_OPTIONS $TMPFILE$n.png
-    tool_check_error $? "scrot"
+
+    if [[ "$SCROT_STACK" -eq 1 && $? -ne $SUCCESS ]]; then
+        local RMSTACK=`echo $SCROT_OPTIONS | sed 's/--stack//g'`
+        echo "$SCRIPT_NAME: Warning, scrot failed with --stack option (desktop $n), it will be tried again without that option."
+        scrot -d "$SCROT_DELAY" -q "$SCROT_QUALITY" $RMSTACK $TMPFILE$n.png
+        tool_check_error $? "scrot"
+    fi
 }
 
 function join() {
-    convert "$CONVERT_OPTIONS" $TMPFILE*.png "$JOIN_IMAGE"
+    convert "$CONVERT_OPTIONS" -background "Black" $TMPFILE*.png  "$JOIN_IMAGE"
     tool_check_error $? "convert"
 }
 
