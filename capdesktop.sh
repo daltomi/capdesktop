@@ -12,6 +12,7 @@
 #         - xdotool
 #         - convert (ImageMagick)
 #     Base tools:
+#         - sed
 #         - mktemp
 #         - whereis
 #         - grep
