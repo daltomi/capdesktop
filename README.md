@@ -19,7 +19,7 @@
 ### Help
 
 ```bash
-Syntax: capdesktop.sh [options]"
+Syntax: capdesktop.sh [options]
   Options:
   -h          help
   -jv         join vertical (default)
