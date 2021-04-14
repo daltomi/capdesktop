@@ -41,6 +41,11 @@ function usage() {
     exit
 }
 
+function exit_to_current_desktop() {
+    xdotool set_desktop "$CURRENT_DESKTOP"
+    exit
+}
+
 function set_options() {
     if [[ "$JOIN_MODE" == "h" ]]; then
         CONVERT_OPTIONS="+append"
@@ -104,7 +109,7 @@ function tool_check_error() {
 
 function tool_print_error() {
         echo "$SCRIPT_NAME: Error, failed tool: $1"
-        exit
+        exit_to_current_desktop
 }
 
 function param_print_error() {
