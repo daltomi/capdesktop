@@ -155,11 +155,11 @@ function param_validate() {
 #------------------------------------------------
 #                    MAIN
 #------------------------------------------------
+SCRIPT_NAME="$(basename "$0")"
+
 tool_check_if_exist "scrot"
 tool_check_if_exist "xdotool"
 tool_check_if_exist "convert"
-#------------------------------------------------
-SCRIPT_NAME="$(basename "$0")"
 
 NDESKTOPS=`xdotool get_num_desktops`
 
