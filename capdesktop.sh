@@ -41,12 +41,12 @@ function usage() {
     echo "   $SCRIPT_NAME -i \"0 2 4\"   (capture desktop 0,2 and 4)"
     echo "   $SCRIPT_NAME -i 2         (capture only desktop 2)"
     echo "   $SCRIPT_NAME -r 800x600   (resize to 800x600)"
-    exit
+    exit_failure
 }
 
 function exit_to_current_desktop() {
     xdotool set_desktop "$CURRENT_DESKTOP"
-    exit
+    exit_failure
 }
 
 function set_options() {
@@ -68,10 +68,9 @@ function set_options() {
 }
 
 function capture() {
-    local SUCCESS=0
     scrot -d "$SCROT_DELAY" -q "$SCROT_QUALITY" $SCROT_OPTIONS $TMPFILE$n.png
 
-    if [[ "$SCROT_STACK" -eq 1 && $? -ne $SUCCESS ]]; then
+    if [[ "$SCROT_STACK" -eq 1 && $? -ne $EXIT_SUCCESS ]]; then
         local RMSTACK=`echo $SCROT_OPTIONS | sed 's/--stack//g'`
         echo "$SCRIPT_NAME: Warning, scrot failed with --stack option (desktop $n), it will be tried again without that option."
         scrot -d "$SCROT_DELAY" -q "$SCROT_QUALITY" $RMSTACK $TMPFILE$n.png
@@ -80,6 +79,8 @@ function capture() {
 }
 
 function join() {
+    print_info "Join images, please wait..."
+
     convert "$CONVERT_OPTIONS" -background "Black" $TMPFILE*.png  $RESIZE "$JOIN_IMAGE"
     tool_check_error $? "convert"
 }
@@ -104,20 +105,16 @@ function log() {
 }
 
 function tool_check_if_exist() {
-    local SUCCESS=0
-
     whereis -b "$1" | grep /bin/ >/dev/null
 
-    if [[ $? -ne $SUCCESS ]]; then
+    if [[ $? -ne $EXIT_SUCCESS ]]; then
         echo "$SCRIPT_NAME: Error, tool not found: $1"
-        exit
+        exit_failure
     fi
 }
 
 function tool_check_error() {
-    local SUCCESS=0
-
-    if [[ $1 -ne $SUCCESS ]]; then
+    if [[ $1 -ne $EXIT_SUCCESS ]]; then
         tool_print_error "$2"
     fi
 }
@@ -159,10 +156,66 @@ function param_validate() {
     done
 }
 
+function exit_failure() {
+    exit $EXIT_FAILURE
+}
+
+function exit_success() {
+    exit $EXIT_SUCCESS
+}
+
+function print_info() {
+    printf ">> %s\n" "$1"
+    tool_check_error $? "printf"
+}
+
+function capture_desktops() {
+    print_info "Capturing with delay of $SCROT_DELAY seg. ..."
+
+    if [[ "$ID_DESKTOPS" == "-1" ]]; then
+        for ((n=0; n < "$NDESKTOPS"; n++)); do
+            xdotool set_desktop "$n"
+            tool_check_error $? "xdotool"
+            capture
+        done
+    else
+        for n in $ID_DESKTOPS; do
+            xdotool set_desktop "$n"
+            tool_check_error $? "xdotool"
+            capture
+        done
+    fi
+}
+
+function restore_current_desktop() {
+    xdotool set_desktop "$CURRENT_DESKTOP"
+    tool_check_error $? "xdotool"
+}
+
+function print_log() {
+    [[ "$PRINT_LOG" -eq 1 ]] && log
+}
+
+function clean_temporary() {
+    print_info "Cleaning temporary files in /tmp ..."
+    rm $TMPFILE*.png
+    tool_check_error $? "rm"
+}
+
+function finalize() {
+    print_info "Done."
+    print_info "File: $PWD/$JOIN_IMAGE"
+    exit_success
+}
+
 #------------------------------------------------
 #                    MAIN
 #------------------------------------------------
 SCRIPT_NAME="$(basename "$0")"
+
+EXIT_SUCCESS=0
+
+EXIT_FAILURE=1
 
 tool_check_if_exist "scrot"
 tool_check_if_exist "xdotool"
@@ -212,35 +265,18 @@ do
 done
 
 param_validate
+
 set_options
 
-echo "Capturing with delay of $SCROT_DELAY seg. ..."
+capture_desktops
 
-if [[ "$ID_DESKTOPS" == "-1" ]]; then
-    for ((n=0; n < "$NDESKTOPS"; n++)); do
-        xdotool set_desktop "$n"
-        tool_check_error $? "xdotool"
-        capture
-    done
-else
-    for n in $ID_DESKTOPS; do
-        xdotool set_desktop "$n"
-        tool_check_error $? "xdotool"
-        capture
-    done
-fi
+restore_current_desktop
 
-xdotool set_desktop "$CURRENT_DESKTOP"
-tool_check_error $? "xdotool"
-
-echo Join images to file \""$PWD"/"$JOIN_IMAGE"\", please wait...
 join
 
-[[ "$PRINT_LOG" -eq 1 ]] && log
+print_log
 
-echo "Cleaning temporary files in /tmp ..."
-rm $TMPFILE*.png
-tool_check_error $? "rm"
+clean_temporary
 
-echo "Done."
+finalize
 
