@@ -13,8 +13,8 @@ Syntax: capdesktop.sh [options]
   -h          help
   -jv         join vertical (default)
   -jh         join horizontal
-  -d [num]    delay (default: 1 seg.)
-  -s          stack windows
+  -d [num]    delay for each shot (default: 1 seg.)
+  -s          capture stack/overlapped windows
   -p          capture mouse pointer
   -i [num]    desktops ids, start at 0 (default:-1 == all)
   -r [value]  resize the image, format WxH
