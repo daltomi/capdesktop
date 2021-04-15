@@ -45,7 +45,7 @@ function usage() {
 }
 
 function exit_to_current_desktop() {
-    xdotool set_desktop "$CURRENT_DESKTOP"
+    restore_current_desktop
     exit_failure
 }
 
