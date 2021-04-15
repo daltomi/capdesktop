@@ -29,5 +29,7 @@ Example:
 
 ### Dependencies:
 
-Please, read the header of the script.
+Tools are detected at runtime.
+
+A list of dependencies is indicated in the header of the script.
 
