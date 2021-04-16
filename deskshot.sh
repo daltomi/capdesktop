@@ -249,7 +249,7 @@ SCROT_OPTIONS=""
 
 CONVERT_OPTIONS="-append"
 
-while getopts "j:d:spi:r:l" option
+while getopts "hj:d:spi:r:l" option
 do
     case $option in
         h   ) usage;;
