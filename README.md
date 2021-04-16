@@ -2,6 +2,8 @@
 
 Take a screenshot of the selected desktops and merge them into a single image.
 
+[![Release](https://img.shields.io/github/v/release/daltomi/deskshot)](https://github.com/daltomi/deskshot/releases/latest)
+
 <img src="https://github.com/daltomi/deskshot/raw/master/screenshots/deskshot.png"/>
 
 
@@ -19,6 +21,7 @@ Syntax: deskshot.sh [options]
   -i [num]    desktops ids, start at 0 (default:-1 == all)
   -r [value]  resize the image, format WxH
   -l          print script log
+  -v          print version and exit
 
 Example:
   deskshot.sh              (capture all desktops)
