@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #------------------------------------------------
-# * capdesktop - Screenshot of virtual desktops.
+# * deskshot - Screenshot of virtual desktops.
 #
 # * Author: https://github.com/daltomi
 #
@@ -225,9 +225,9 @@ NDESKTOPS=`xdotool get_num_desktops`
 
 CURRENT_DESKTOP=`xdotool get_desktop`
 
-TMPFILE="$(mktemp --dry-run)_capdesktop"
+TMPFILE="$(mktemp --dry-run)_deskshot"
 
-JOIN_IMAGE=`mktemp --dry-run capdesktop-XXXX.png`
+JOIN_IMAGE=`mktemp --dry-run deskshot-XXXX.png`
 
 JOIN_MODE="v"
 
