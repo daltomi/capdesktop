@@ -7,7 +7,7 @@ Take a screenshot of the selected desktops and merge them into a single image.
 
 ### Help
 
-```bash
+```
 Syntax: capdesktop.sh [options]
   Options:
   -h          help
