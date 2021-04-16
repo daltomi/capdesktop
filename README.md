@@ -21,6 +21,7 @@ Syntax: deskshot.sh [options]
   -i [num]    desktops ids, start at 0 (default:-1 == all)
   -r [value]  resize the image, format WxH
   -l          print script log
+  -v          print version and exit
 
 Example:
   deskshot.sh              (capture all desktops)

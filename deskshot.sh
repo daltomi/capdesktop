@@ -23,7 +23,18 @@
 #
 #------------------------------------------------
 
+function print_version() {
+    local VERSION=v1.2
+    echo "$SCRIPT_NAME $VERSION"
+}
+
+function print_version_and_exit() {
+    print_version
+    exit_failure
+}
+
 function usage() {
+    print_version
     echo "Syntax: $SCRIPT_NAME [options]"
     echo "  Options:"
     echo "  -h          help"
@@ -35,6 +46,7 @@ function usage() {
     echo "  -i [num]    desktops ids, start at 0 (default:-1 == all)"
     echo "  -r [value]  resize the image, format WxH"
     echo "  -l          print script log"
+    echo "  -v          print version and exit"
     echo
     echo "  Example:"
     echo "   $SCRIPT_NAME              (capture all desktops)"
@@ -249,10 +261,11 @@ SCROT_OPTIONS=""
 
 CONVERT_OPTIONS="-append"
 
-while getopts "hj:d:spi:r:l" option
+while getopts "hvj:d:spi:r:l" option
 do
     case $option in
         h   ) usage;;
+        v   ) print_version_and_exit;;
         j   ) JOIN_MODE="$OPTARG";;
         d   ) SCROT_DELAY="$OPTARG";;
         s   ) SCROT_STACK=1;;
@@ -263,6 +276,8 @@ do
         ?   ) usage;;
     esac
 done
+
+print_version
 
 param_validate
 
