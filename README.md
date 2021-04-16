@@ -1,14 +1,14 @@
-## capdesktop.sh - Screenshot of virtual desktops
+## deskshot.sh - Screenshot of virtual desktops
 
 Take a screenshot of the selected desktops and merge them into a single image.
 
-<img src="https://github.com/daltomi/capdesktop/raw/master/screenshots/capdesktop.png"/>
+<img src="https://github.com/daltomi/deskshot/raw/master/screenshots/deskshot.png"/>
 
 
 ### Help
 
 ```
-Syntax: capdesktop.sh [options]
+Syntax: deskshot.sh [options]
   Options:
   -h          help
   -jv         join vertical (default)
@@ -21,10 +21,10 @@ Syntax: capdesktop.sh [options]
   -l          print script log
 
 Example:
-  capdesktop.sh              (capture all desktops)
-  capdesktop.sh -i "0 2 4"   (capture desktop 0,2 and 4)
-  capdesktop.sh -i 2         (capture only desktop 2)
-  capdesktop.sh -r 800x600   (resize to 800x600)
+  deskshot.sh              (capture all desktops)
+  deskshot.sh -i "0 2 4"   (capture desktop 0,2 and 4)
+  deskshot.sh -i 2         (capture only desktop 2)
+  deskshot.sh -r 800x600   (resize to 800x600)
 ```
 
 ### Dependencies:
