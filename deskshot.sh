@@ -24,7 +24,7 @@
 #------------------------------------------------
 
 function print_version() {
-    local VERSION=v1.2
+    local VERSION=v1.3
     echo "$SCRIPT_NAME $VERSION"
 }
 
@@ -35,8 +35,15 @@ function print_version_and_exit() {
 
 function usage() {
     print_version
-    echo "Syntax: $SCRIPT_NAME [options]"
-    echo "  Options:"
+    echo
+    echo "Syntax: $SCRIPT_NAME [options] [file]"
+    echo
+    echo "Description:"
+    echo "  . Take a screenshot of the selected desktops and merge them into a single image."
+    echo "  . The file name is optional."
+    echo "  . The default image type is PNG if the extension is not specified."
+    echo
+    echo "Options:"
     echo "  -h          help"
     echo "  -jv         join vertical (default)"
     echo "  -jh         join horizontal"
@@ -216,8 +223,14 @@ function clean_temporary() {
 
 function finalize() {
     print_info "Done."
-    print_info "File: $PWD/$JOIN_IMAGE"
+    print_info "File: '$JOIN_IMAGE'"
     exit_success
+}
+
+function get_user_join_image() {
+    if ! [[ -z "$1" ]]; then
+        JOIN_IMAGE="$1"
+    fi
 }
 
 #------------------------------------------------
@@ -276,6 +289,10 @@ do
         ?   ) usage;;
     esac
 done
+
+shift $(($OPTIND - 1))
+
+get_user_join_image "$*"
 
 print_version
 

@@ -8,32 +8,15 @@ Take a screenshot of the selected desktops and merge them into a single image.
 
 ### Help
 
-```
-Syntax: deskshot.sh [options]
-  Options:
-  -h          help
-  -jv         join vertical (default)
-  -jh         join horizontal
-  -d [num]    delay for each shot (default: 1 seg.)
-  -s          capture stack/overlapped windows
-  -p          capture mouse pointer
-  -i [num]    desktops ids, start at 0 (default:-1 == all)
-  -r [value]  resize the image, format WxH
-  -l          print script log
-  -v          print version and exit
+See `deskshot.sh -h`
 
-Example:
-  deskshot.sh              (capture all desktops)
-  deskshot.sh -i "0 2 4"   (capture desktop 0,2 and 4)
-  deskshot.sh -i 2         (capture only desktop 2)
-  deskshot.sh -r 800x600   (resize to 800x600)
-```
 
 #### Dependencies:
 
 Tools are detected at runtime.
 
 A list of dependencies is indicated in the header of the script.
+
 
 #### GPG key:
 
