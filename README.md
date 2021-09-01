@@ -17,13 +17,3 @@ Tools are detected at runtime.
 
 A list of dependencies is indicated in the header of the script.
 
-
-#### GPG key:
-
-`gpg --keyserver gozer.rediris.es --recv-keys EA8BDDF776B54DD1`
-
-
-#### AUR:
-
-Package [deskshot.sh](https://aur.archlinux.org/packages/deskshot.sh)
-
